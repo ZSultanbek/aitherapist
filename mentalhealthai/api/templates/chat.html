@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ИИ-Психолог</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .chat-container {
+            background-color: white;
+            width: 360px;
+            height: 560px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-header {
+            background: linear-gradient(135deg, #a259ff, #6a00ff);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header span {
+            font-size: 18px;
+        }
+        .chat-header .auth-buttons a {
+            background-color: white;
+            color: #6a00ff;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            text-decoration: none;
+            margin-left: 6px;
+            font-weight: bold;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        .chat-form {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+        .chat-form input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+        .chat-form button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #6a00ff;
+            color: white;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="chat-container">
+    <div class="chat-header">
+        <span>Мен Жақынмын</span>
+        <div class="auth-buttons">
+            <form method="post" action="/logout/">
+                {% csrf_token %}
+                <button type="submit" class="chat-header">Logout</button>
+            </form>
+        </div>
+    </div>
+    <div id="chat-box" class="chat-box">
+    {% for message in history %}
+        <p><b>Ты:</b> {{ message.content }}</p>
+        <p><b>ЖИ:</b> {{ message.response }}</p>
+    {% endfor %}
+    </div>
+    <form id="chat-form" method="post" class="chat-form">
+        {% csrf_token %}
+        <input type="text" name="message" id="message" placeholder="Напиши что-то..." required />
+        <button type="submit">➤</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById("chat-form").onsubmit = async function(e) {
+        e.preventDefault();
+        let message = document.getElementById("message").value;
+        let response = await fetch("", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "message=" + encodeURIComponent(message)
+        });
+        let data = await response.json();
+        document.getElementById("chat-box").innerHTML += `<p><b>Ты:</b> ${message}</p>`;
+        document.getElementById("chat-box").innerHTML += `<p><b>ИИ:</b> ${data.response}</p>`;
+        document.getElementById("message").value = "";
+        document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
+    };
+</script>
+</body>
+</html>
