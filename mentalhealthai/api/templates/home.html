@@ -109,7 +109,7 @@
             <button type="submit" class="link-button">Шығу</button>
           </form>
         {% else %}
-          <a href="{% url 'login' %}?next={% url 'home/chat' %}">Кіру</a>
+          <a href="{% url 'login' %}?next={% url 'chat' %}">Кіру</a>
           <a href="{% url 'signup' %}">Тіркелу</a>
         {% endif %}
       </div>
