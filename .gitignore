@@ -1,0 +1,101 @@
+# ==========================
+# Django / Python backend
+# ==========================
+
+# Virtual environment
+venv/
+.env/
+.env.*
+.envrc
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+db.sqlite3
+local_settings.py
+*.sqlite3
+*.db
+
+# Media / static
+media/
+staticfiles/
+static/
+
+# Unit test / coverage reports
+.coverage
+*.cover
+htmlcov/
+.tox/
+.nox/
+.cache/
+pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# IDE / editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.bak
+
+# Migrations cache
+*/migrations/__pycache__/
+
+# ==========================
+# AngularJS / Frontend
+# ==========================
+
+# Node / npm
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Compiled output
+dist/
+build/
+.tmp/
+coverage/
+*.tsbuildinfo
+
+# Angular / JS tooling
+.angular/
+.bazel/
+.parcel-cache/
+.vite/
+vite.config.*
+.angular/cache/
+
+# Environment files
+*.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.orig
