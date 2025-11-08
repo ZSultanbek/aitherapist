@@ -1,5 +1,9 @@
 from .models import Message
 from django.shortcuts import redirect, render
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # This loads the variables from .env
 
 # Create your views here.
 import google.generativeai as genai
@@ -11,7 +15,7 @@ from django.contrib.auth import login
 from django.http import JsonResponse
 
 # Настрой API-ключ
-GENAI_API_KEY = "AIzaSyA6CMjGotV3VAHNgmkW3fdEDNuujhGZqDU"
+GENAI_API_KEY = os.getenv("API_KEY")
 genai.configure(api_key=GENAI_API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash")
 
