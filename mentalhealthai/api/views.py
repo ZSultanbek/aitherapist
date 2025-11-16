@@ -13,9 +13,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.http import JsonResponse
+from vault_client import get_ai_therapist_secrets
 
 # Настрой API-ключ
-GENAI_API_KEY = os.getenv("API_KEY")
+secrets = get_ai_therapist_secrets()
+GENAI_API_KEY = secrets["gemini_api_key"]
 genai.configure(api_key=GENAI_API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash")
 
