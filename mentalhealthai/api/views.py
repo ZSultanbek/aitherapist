@@ -2,6 +2,8 @@ from .models import Message
 from django.shortcuts import redirect, render
 from dotenv import load_dotenv
 import os
+from django.contrib.auth.decorators import login_required
+
 
 load_dotenv()  # This loads the variables from .env
 
@@ -66,5 +68,7 @@ def register(request):
     return render(request, "registration/register.html", {"form": form})
 
 
+@login_required
 def home(request):
-    return render(request, "home.html")
+    discipline = request.session.get("oidc_userinfo", {}).get("discipline", "Not provided")
+    return render(request, "home.html", {"discipline": discipline})

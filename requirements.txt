@@ -5,3 +5,5 @@ psycopg2-binary
 dj-database-url
 whitenoise
 dotenv
+mozilla-django-oidc 
+python-jose

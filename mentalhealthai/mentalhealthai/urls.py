@@ -24,6 +24,7 @@ from django.views.generic import RedirectView
 urlpatterns = [
     
     path('admin/', admin.site.urls),
+    path("oidc/", include("mozilla_django_oidc.urls")),
     path('home/', include('api.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path("register/", register, name="register"),

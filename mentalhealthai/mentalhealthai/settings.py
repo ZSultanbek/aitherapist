@@ -33,7 +33,9 @@ ALLOWED_HOSTS = [
     "aitherapist-0kz7.onrender.com",'*']
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://aitherapist-0kz7.onrender.com"
+    "https://aitherapist-0kz7.onrender.com",
+    "https://localhost:8000",
+    "http://localhost:8080",
 ]
 
 # Application definition
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
+    'mozilla_django_oidc',
 ]
 
 MIDDLEWARE = [
@@ -90,6 +93,34 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# ----------------------------
+# Keycloak OIDC Configuration
+# ----------------------------
+
+OIDC_RP_CLIENT_ID = "ai-therapist"
+OIDC_RP_CLIENT_SECRET = "gzrHfUBE8HbJfFg4vWphgC5Q4RX6WOUR"     # from Keycloak client
+OIDC_RP_SIGN_ALGO = "RS256"
+
+KEYCLOAK_BASE_URL = "http://localhost:8080"      # or your Keycloak server
+KEYCLOAK_REALM = "my-realm"
+
+OIDC_OP_AUTHORIZATION_ENDPOINT = f"{KEYCLOAK_BASE_URL}/realms/{KEYCLOAK_REALM}/protocol/openid-connect/auth"
+OIDC_OP_TOKEN_ENDPOINT = f"{KEYCLOAK_BASE_URL}/realms/{KEYCLOAK_REALM}/protocol/openid-connect/token"
+OIDC_OP_USER_ENDPOINT = f"{KEYCLOAK_BASE_URL}/realms/{KEYCLOAK_REALM}/protocol/openid-connect/userinfo"
+OIDC_OP_JWKS_ENDPOINT = f"{KEYCLOAK_BASE_URL}/realms/{KEYCLOAK_REALM}/protocol/openid-connect/certs"
+
+# Request both default and your custom scope "discipline"
+OIDC_RP_SCOPES = "openid discipline"
+
+LOGIN_URL = "/oidc/authenticate/"
+LOGIN_REDIRECT_URL = "/home/"
+LOGOUT_REDIRECT_URL = "/home/"
+
+
+AUTHENTICATION_BACKENDS = [
+    "api.oidc.KeycloakOIDCBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
 
 
 # Password validation
